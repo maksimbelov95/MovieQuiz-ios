@@ -18,14 +18,22 @@ final class MovieQuizViewController: UIViewController {
     
     @IBOutlet private var imageView: UIImageView!
     
-    @IBOutlet var counterLabel: UILabel!
+    @IBOutlet private var counterLabel: UILabel!
     
+    @IBOutlet private var yesButton: UIButton!
     
+    @IBOutlet private var noButton: UIButton!
     
+    @IBOutlet private var questionText: UILabel!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        counterLabel.font = UIFont(name: "YS Display-Medium", size: 20)
+        textLabel.font = UIFont(name: "YS Display-Bold", size: 23)
+        questionText.font = UIFont(name: "YS Display-Medium", size: 20)
+        noButton.titleLabel?.font = UIFont(name: "YS Display-Medium", size: 20)
+        yesButton.titleLabel?.font = UIFont(name: "YS Display-Medium", size: 20)
         let currentQuestion = questions[currentQuestionIndex] //берем данные из массива
         let currentquiz = convert(model: currentQuestion)  // конвертируем их
         show(quiz: currentquiz)                            //выводим на экран
@@ -36,7 +44,7 @@ final class MovieQuizViewController: UIViewController {
     private var bestScore: Int = 0
     private var date = NSDate()
     private var totalPlayed = 0
-    var accuracySumm:Double = 0
+    private var accuracySumm:Double = 0
     
     
     // для состояния "Вопрос задан"
@@ -73,8 +81,6 @@ final class MovieQuizViewController: UIViewController {
     
 
     private func show(quiz result: QuizResultsViewModel) {
-        
-      // здесь мы показываем результат прохождения квиза
     }
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         return QuizStepViewModel(
@@ -87,12 +93,11 @@ final class MovieQuizViewController: UIViewController {
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
-        
-        
-      // здесь мы заполняем нашу картинку, текст и счётчик данными
        
     }
     private func showAnswerResult(isCorrect: Bool) {
+        yesButton.isEnabled = false
+        noButton.isEnabled = false
         imageView.layer.masksToBounds = true
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         imageView.layer.borderWidth = 8
@@ -100,19 +105,12 @@ final class MovieQuizViewController: UIViewController {
             correctAnswers += 1
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // запускаем задачу через 1 секунду
-            // код, который вы хотите вызвать через 1 секунду,
-            // в нашем случае это просто функция showNextQuestionOrResults()
             self.imageView.layer.borderWidth = 0
             self.showNextQuestionOrResults()
         }
-        
-        
-        //функция показа ответа
-
     }
-    
     private func showNextQuestionOrResults() {
-        if currentQuestionIndex == questions.count - 1 { // - 1 потому что индекс начинается с 0, а длинна массива — с 1
+        if currentQuestionIndex == questions.count - 1 {
             totalPlayed += 1
             accuracySumm = accuracySumm + Double(correctAnswers)
             print(accuracySumm)
@@ -122,7 +120,6 @@ final class MovieQuizViewController: UIViewController {
           if bestScore < correctAnswers{
               bestScore = correctAnswers
               date = NSDate()
-              
           }
           let resultMessage = """
           Ваш результат: \(correctAnswers) из 10
@@ -131,8 +128,6 @@ final class MovieQuizViewController: UIViewController {
           Всего сыграно: \(totalPlayed)
           Точность правильных ответов: \(Int(accuracy))%
           """
-          // показать результат квиза
-          // создаём объекты всплывающего окна
           let alert = UIAlertController(title: "Этот раунд окончен!", // заголовок всплывающего окна
                                         message: resultMessage,// текст во всплывающем окне
                                         preferredStyle: .alert) // preferredStyle может быть .alert или .actionSheet
@@ -144,6 +139,8 @@ final class MovieQuizViewController: UIViewController {
               let currentQuestion = questions[currentQuestionIndex]
               let currentquiz = convert(model: currentQuestion)
               self.show(quiz: currentquiz)
+              yesButton.isEnabled = true
+              noButton.isEnabled = true
           }
 
           // добавляем в алерт кнопки
@@ -153,10 +150,12 @@ final class MovieQuizViewController: UIViewController {
          
           self.present(alert, animated: true, completion: nil)
       } else {
-        currentQuestionIndex += 1 // увеличиваем индекс текущего урока на 1; таким образом мы сможем получить следующий урок
+        currentQuestionIndex += 1 // увеличиваем индекс текущего квиза на 1
           let currentQuestion = questions[currentQuestionIndex]
           let currentquiz = convert(model: currentQuestion)
-          show(quiz: currentquiz)                         // показать следующий вопрос
+          show(quiz: currentquiz)      // показать следующий вопрос
+          yesButton.isEnabled = true
+          noButton.isEnabled = true
       }
     }
 }
@@ -226,34 +225,3 @@ final class MovieQuizViewController: UIViewController {
  Ответ: НЕТ
  */
 
-
-//private func showNextQuestionOrResults() {
-//  if currentQuestionIndex == questions.count - 1 { // - 1 потому что индекс начинается с 0, а длинна массива — с 1
-//
-//      // показать результат квиза
-//      // создаём объекты всплывающего окна
-//      let alert = UIAlertController(title: "My Alert", // заголовок всплывающего окна
-//                                    message: "This is an alert.", // текст во всплывающем окне
-//                                    preferredStyle: .alert) // preferredStyle может быть .alert или .actionSheet
-//
-//      // создаём для него кнопки с действиями
-//      let action = UIAlertAction(title: "Сыграть еще раз", style: .default) { [self] _ in
-//          correctAnswers = 0
-//          currentQuestionIndex = 0
-//          let currentQuestion = questions[currentQuestionIndex]
-//          let currentquiz = convert(model: currentQuestion)
-//          self.show(quiz: currentquiz)
-//      }
-//
-//      // добавляем в алерт кнопки
-//      alert.addAction(action)
-//
-//      // показываем всплывающее окно
-//
-//      self.present(alert, animated: true, completion: nil)
-//  } else {
-//    currentQuestionIndex += 1 // увеличиваем индекс текущего урока на 1; таким образом мы сможем получить следующий урок
-//      let currentQuestion = questions[currentQuestionIndex]
-//      let currentquiz = convert(model: currentQuestion)
-//      show(quiz: currentquiz)                         // показать следующий вопрос
-//  }
