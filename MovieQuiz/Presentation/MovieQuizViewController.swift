@@ -28,12 +28,12 @@ final class MovieQuizViewController: UIViewController {
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
-        super.viewDidLoad()
-        counterLabel.font = UIFont(name: "YS Display-Medium", size: 20)
-        textLabel.font = UIFont(name: "YS Display-Bold", size: 23)
-        questionText.font = UIFont(name: "YS Display-Medium", size: 20)
-        noButton.titleLabel?.font = UIFont(name: "YS Display-Medium", size: 20)
-        yesButton.titleLabel?.font = UIFont(name: "YS Display-Medium", size: 20)
+        super.viewDidLoad()//YSDisplay-Bold
+        counterLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        textLabel.font = UIFont(name: "YSDisplay-Bold", size: 23)
+        questionText.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        noButton.titleLabel?.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        yesButton.titleLabel?.font = UIFont(name: "YSDisplay-Medium", size: 20)
         let currentQuestion = questions[currentQuestionIndex] //берем данные из массива
         let currentquiz = convert(model: currentQuestion)  // конвертируем их
         show(quiz: currentquiz)                            //выводим на экран
@@ -45,6 +45,7 @@ final class MovieQuizViewController: UIViewController {
     private var date = NSDate()
     private var totalPlayed = 0
     private var accuracySumm:Double = 0
+    
     
     
     // для состояния "Вопрос задан"
@@ -149,6 +150,12 @@ final class MovieQuizViewController: UIViewController {
           // показываем всплывающее окно
          
           self.present(alert, animated: true, completion: nil)
+            print(counterLabel.font!)
+            print(textLabel.font!)
+            print(questionText.font!)
+            print(noButton.titleLabel?.font!)
+            print(yesButton.titleLabel?.font!)
+            print("privet")
       } else {
         currentQuestionIndex += 1 // увеличиваем индекс текущего квиза на 1
           let currentQuestion = questions[currentQuestionIndex]
