@@ -7,7 +7,7 @@ protocol AlertPresenterProtocol{
 
 final class AlertPresenter: AlertPresenterProtocol{
     
-    weak var viewController: MovieQuizViewController?
+   private weak var viewController: MovieQuizViewController?
     
     init(viewController: MovieQuizViewController? = nil) {
         self.viewController = viewController

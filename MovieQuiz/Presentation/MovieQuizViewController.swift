@@ -1,6 +1,30 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
+    // MARK: - Properties
+    private let questionsAmount: Int = 10
+    private var questionFactory: QuestionFactoryProtocol? = nil
+    private var currentQuestion: QuizQuestion?
+    private var currentQuestionIndex: Int = 0
+    private var correctAnswers: Int = 0
+    private var alertPresenter: AlertPresenterProtocol?
+    private var statisticService: StatisticService?
+    
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        counterLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        textLabel.font = UIFont(name: "YSDisplay-Bold", size: 23)
+        questionText.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        noButton.titleLabel?.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        yesButton.titleLabel?.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        
+        questionFactory = QuestionFactory(delegate: self)
+        questionFactory?.requestNextQuestion()
+        alertPresenter = AlertPresenter(viewController: self)
+        statisticService = StatisticServiceImplementation()
+    }
+    // MARK: - IBActions
     @IBAction private func noButtonClicked(_ sender: UIButton) {
         guard let currentQuestion = currentQuestion else {
             return
@@ -29,18 +53,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     @IBOutlet private var questionText: UILabel!
     
-    // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()//YSDisplay-Bold
-
-        questionFactory = QuestionFactory(delegate: self)
-        questionFactory?.requestNextQuestion()
-        alertPresenter = AlertPresenter(viewController: self)
-        statisticServise = StatisticServiceImplementation()
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        documentsURL.appendPathComponent(fileName)
-        let jsonString = try? String(contentsOf: documentsURL)
-    }
     // MARK: - QuestionFactoryDelegate
 
     func didReceiveNextQuestion(question: QuizQuestion?) {
@@ -54,23 +66,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self?.show(quiz: viewModel)
         }
     }
-    
-    private let questionsAmount: Int = 10
-    private var questionFactory: QuestionFactoryProtocol? = nil
-    private var currentQuestion: QuizQuestion?
-    private var currentQuestionIndex: Int = 0
-    private var correctAnswers: Int = 0
-    private var bestScore: Int = 0
-    private var date = NSDate()
-    private var totalPlayed = 0
-    private var accuracySumm:Double = 0
-    private var alertPresenter: AlertPresenterProtocol?
-    private var statisticServise: StatisticService?
-    var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    let fileName = "inception.json"
-    
-    
-    
+ 
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         return QuizStepViewModel(
             image: UIImage(named: model.image) ?? UIImage(),
@@ -111,7 +107,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             }
     
     private func showFinalResults() {
-        statisticServise?.store(correct: correctAnswers, total: questionsAmount)
+        statisticService?.store(correct: correctAnswers, total: questionsAmount)
  
         let alertModel = AlertModel(
             title: "Игра окончена",
@@ -126,12 +122,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     private func makeResultMessage() -> String{
         
-        guard let statisticServise = statisticServise, let bestGame = statisticServise.bestGame else {
+        guard let statisticService = statisticService, let bestGame = statisticService.bestGame else {
             assertionFailure("error message")
             return ""
         }
-        let accuracy = String(format: "%.2f", statisticServise.totalAccuracy)
-        let totalPlaysCountLine = "Количество сыграных квизов: \(statisticServise.gamesCount)"
+        let accuracy = String(format: "%.2f", statisticService.totalAccuracy)
+        let totalPlaysCountLine = "Количество сыграных квизов: \(statisticService.gamesCount)"
         let currentGameResultsLine = "Ваш результат: \(correctAnswers)\\\(questionsAmount)"
         let bestGameInfoLine = "Рекорд: \(bestGame.correct)\\\(bestGame.total)" + "(\(bestGame.date.dateTimeString))"
         let averageAccuracyLine = "Средняя точность: \(String(accuracy))%"

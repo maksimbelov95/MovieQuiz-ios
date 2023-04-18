@@ -20,7 +20,6 @@
 		4B9CB20129EC680000A01A4D /* top250MoviesIMDB.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B9CB20029EC680000A01A4D /* top250MoviesIMDB.json */; };
 		4B9CB20329EC6AEF00A01A4D /* StatisticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9CB20229EC6AEF00A01A4D /* StatisticService.swift */; };
 		4B9CB20529EC6FB200A01A4D /* BestGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9CB20429EC6FB200A01A4D /* BestGame.swift */; };
-		4BF14AAE29E89AD60062A3A2 /* JsonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF14AAD29E89AD60062A3A2 /* JsonModel.swift */; };
 		AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB12831907B00B3E448 /* AppDelegate.swift */; };
 		AD1ABAB42831907B00B3E448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB32831907B00B3E448 /* SceneDelegate.swift */; };
 		AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */; };
@@ -46,7 +45,6 @@
 		4B9CB20029EC680000A01A4D /* top250MoviesIMDB.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = top250MoviesIMDB.json; sourceTree = "<group>"; };
 		4B9CB20229EC6AEF00A01A4D /* StatisticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticService.swift; sourceTree = "<group>"; };
 		4B9CB20429EC6FB200A01A4D /* BestGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestGame.swift; sourceTree = "<group>"; };
-		4BF14AAD29E89AD60062A3A2 /* JsonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonModel.swift; sourceTree = "<group>"; };
 		AD1ABAAE2831907B00B3E448 /* MovieQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD1ABAB12831907B00B3E448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD1ABAB32831907B00B3E448 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,7 +87,6 @@
 				4B3F9A3A29D9BDFE00CA5D66 /* QuizResultsViewModel.swift */,
 				4B3F9A3C29D9BE1600CA5D66 /* QuizQuestion.swift */,
 				4B3676FD29E725C000FE9D3B /* AlertModel.swift */,
-				4BF14AAD29E89AD60062A3A2 /* JsonModel.swift */,
 				4B9CB20429EC6FB200A01A4D /* BestGame.swift */,
 			);
 			path = Models;
@@ -241,7 +238,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BF14AAE29E89AD60062A3A2 /* JsonModel.swift in Sources */,
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
 				4B37257F29E42FFB002EC34D /* QuestionFactoryProtocol.swift in Sources */,
