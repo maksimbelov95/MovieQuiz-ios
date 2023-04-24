@@ -23,6 +23,7 @@ class QuestionFactory: QuestionFactoryProtocol {
         }
     }
     func requestNextQuestion() {
+  
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             let index = (0..<self.movies.count).randomElement() ?? 0
@@ -36,11 +37,11 @@ class QuestionFactory: QuestionFactoryProtocol {
             } catch {
                 print("Failed to load image")
             }
-            
+            let questionRating = (1...9).randomElement() ?? 0
             let rating = Float(movie.rating) ?? 0
             
-            let text = "Рейтинг этого фильма больше чем 7?"
-            let correctAnswer = rating > 7
+            let text = "Рейтинг этого фильма больше чем \(questionRating)?"
+            let correctAnswer = rating > Float(questionRating)
             
             let question = QuizQuestion(image: imageData,
                                         text: text,
