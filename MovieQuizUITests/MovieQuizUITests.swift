@@ -65,8 +65,8 @@ class MovieQuizUITests: XCTestCase {
         let alert = app.alerts["Game results"]
         
         XCTAssertTrue(alert.exists)
-        XCTAssertTrue(alert.label == "Этот раунд окончен!")
-        XCTAssertTrue(alert.buttons.firstMatch.label == "Сыграть еще раз?")
+        XCTAssertEqual(alert.label == "Этот раунд окончен!", true)
+        XCTAssertEqual(alert.buttons.firstMatch.label == "Сыграть еще раз?", true)
     }
 
     func testAlertDismiss() {
@@ -84,6 +84,6 @@ class MovieQuizUITests: XCTestCase {
         let indexLabel = app.staticTexts["Index"]
         
         XCTAssertFalse(alert.exists)
-        XCTAssertTrue(indexLabel.label == "1/10")
+        XCTAssertEqual(indexLabel.label == "1/10", true)
     }
 }
