@@ -3,6 +3,6 @@ import Foundation
 struct AlertModel {
     var title: String
     var message: String
-    var ButtonText: String
+    var buttonText: String
     var completion:() -> Void
 }

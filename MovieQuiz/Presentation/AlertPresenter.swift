@@ -2,25 +2,26 @@ import Foundation
 import UIKit
 
 protocol AlertPresenterProtocol{
-    func showAllert(alertmodel: AlertModel)
+    func showAllert(alertModel: AlertModel)
 }
 
-final class AlertPresenter: AlertPresenterProtocol{
+final class AlertPresenter {
     
-   private weak var viewController: MovieQuizViewController?
-    
-    init(viewController: MovieQuizViewController? = nil) {
-        self.viewController = viewController
-    }
-    
-    func showAllert(alertmodel: AlertModel) {
-        let alert = UIAlertController(title: alertmodel.title, // заголовок всплывающего окна
-                                      message: alertmodel.message,// текст во всплывающем окне
-                                      preferredStyle: .alert) // preferredStyle может быть .alert или .actionSheet
-        let action = UIAlertAction(title: alertmodel.ButtonText, style: .default) { _ in
-            alertmodel.completion()
-        }
-        alert.addAction(action)
-        viewController?.present(alert, animated: true, completion: nil)
+    func show(view controller: UIViewController, alertModel: AlertModel) {
+        let alertController = UIAlertController(title: alertModel.title,
+                                      message: alertModel.message,
+                                      preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: alertModel.buttonText,
+                                   style: .default,
+                                   handler: { _ in
+            alertModel.completion()
+        })
+        
+        alertController.view.accessibilityIdentifier = "Game results"
+        
+        alertController.addAction(action)
+        
+        controller.present(alertController, animated: true)
     }
 }
